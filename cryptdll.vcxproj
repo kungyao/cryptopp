@@ -28,6 +28,7 @@
     <ProjectGuid>{94a428a1-9ba8-4db2-b76e-bd2e3c08f257}</ProjectGuid>
     <RootNamespace>cryptdll</RootNamespace>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <!-- Use DefaultPlatformToolset after Microsoft.Cpp.Default.props -->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -36,7 +37,7 @@
     <DefaultPlatformToolset Condition=" '$(DefaultPlatformToolset)' == '' ">v100</DefaultPlatformToolset>
   </PropertyGroup>
   <PropertyGroup Label="PlatformToolset">
-    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
@@ -81,12 +82,12 @@
   <!-- Debug Configurations -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'" Label="Debug Configuration">
     <ClCompile>
-      <PreprocessorDefinitions>CRYPTOPP_EXPORTS;CRYPTOPP_ENABLE_COMPLIANCE_WITH_FIPS_140_2=1;USE_PRECOMPILED_HEADERS</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CRYPTOPP_EXPORTS;USE_PRECOMPILED_HEADERS;CRYPTOPP_ENABLE_COMPLIANCE_WITH_FIPS_140_2=1</PreprocessorDefinitions>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -165,6 +166,11 @@
       <Inputs>%(Inputs)</Inputs>
       <Outputs>$(OutDir)cryptopp.mac.done;%(Outputs)</Outputs>
     </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <UndefinePreprocessorDefinitions>CRYPTOPP_ENABLE_COMPLIANCE_WITH_FIPS_140_2</UndefinePreprocessorDefinitions>
+    </ClCompile>
   </ItemDefinitionGroup>
   <!-- Original File with special treatment -->
   <ItemGroup>
